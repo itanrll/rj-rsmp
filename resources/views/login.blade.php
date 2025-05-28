@@ -78,14 +78,23 @@
     </div>
     <h3><strong>Welcome to <span style="color:#333;">RJ-RSMP</span></strong></h3>
     <p class="mb-4">Login with your username and password</p>
-    <form>
+    @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
+    <form method="POST" action="{{ route('actionlogin') }}">
+      @csrf
       <div class="form-group">
         <label>Username</label>
-        <input type="text" class="form-control" placeholder="Masukkan Username">
+        <input type="text" class="form-control" placeholder="Masukkan Username" name="username">
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" placeholder="Masukkan Password">
+        <input type="password" class="form-control" placeholder="Masukkan Password" name="password">
       </div>
       <button type="submit" class="btn btn-warning btn-block">Login</button>
     <div class="text-center mt-3">
