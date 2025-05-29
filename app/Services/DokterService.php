@@ -3,7 +3,9 @@
 namespace App\Services;
 use App\Models\Dokter;
 use Exception;
+// use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DokterService
 {
@@ -19,7 +21,6 @@ class DokterService
         try {
             $query = Dokter::query();
 
-            // Jika ada parameter pencarian
             if ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('nama_dokter', 'like', "%{$search}%")
@@ -28,63 +29,55 @@ class DokterService
                       ->orWhere('SIP', 'like', "%{$search}%");
                 });
             }
-    
-            
 
-            // Jika tidak ada parameter pencarian, kembalikan semua data
-            return $query->paginate(10); // <= ini penting
-        } catch (\Exception $e) {
-            \Log::error('Error getting all dokter: ' . $e->getMessage());
+            return $query->paginate(10);
+        } catch (Exception $e) {
+            Log::error('Error getting all dokter: ' . $e->getMessage());
             return false;
         }
     }
-
-    
 
     public function create(Request $request)
     {
-        // dd($request->all());
         try {
-            $kelas = Kelas::create([
-                'nama_kelas' => $request->nama_kelas,
-                'id_jeniskelas' => $request->jenis_kelas,
-                'id_jurusan' => $request->jurusan,
-                'id_pegawai' => $request->id_pegawai,
+            $dokter = Dokter::create([
+                'nama_dokter'    => $request->nama_dokter,
+                'spesialisasi'   => $request->spesialisasi,
+                'alamat_dokter'  => $request->alamat_dokter,
+                'SIP'            => $request->SIP,
             ]);
 
-
-            
+            return $dokter;
         } catch (Exception $e) {
-            \Log::error('Error creating kelas: ' . $e->getMessage());
-            return false;
-        }
-        return $kelas;
-    }
-
-    public function update(Request $request, $id_kelas)
-    {
-        try {
-            $kelas = Kelas::findOrFail($id_kelas);
-            $kelas->update([
-                'nama_kelas' => $request->nama_kelas,
-                'id_jeniskelas' => $request->jenis_kelas,
-                'id_jurusan' => $request->jurusan,
-                'id_pegawai' => $request->id_pegawai,
-            ]);
-            return $kelas;
-        } catch (Exception $e) {
-            \Log::error('Error updating kelas: ' . $e->getMessage());
+            Log::error("message");('Error creating dokter: ' . $e->getMessage());
             return false;
         }
     }
 
-    public function delete($id_kelas)
+    public function update(Request $request, $id)
     {
         try {
-            $kelas = Kelas::findOrFail($id_kelas);
-            return $kelas->delete();
+            $dokter = Dokter::findOrFail($id);
+            $dokter->update([
+                'nama_dokter'    => $request->nama_dokter,
+                'spesialisasi'   => $request->spesialisasi,
+                'alamat_dokter'  => $request->alamat_dokter,
+                'SIP'            => $request->SIP,
+            ]);
+            return $dokter;
         } catch (Exception $e) {
-            \Log::error('Error deleting kelas: ' . $e->getMessage());
+            Log::error('Error updating dokter: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $dokter = Dokter::findOrFail($id);
+            return $dokter->delete();
+        } catch (Exception $e) {
+            Log::error("message");('Error deleting dokter: ' . $e->getMessage());
             return false;
         }
     }

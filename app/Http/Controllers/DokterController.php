@@ -11,6 +11,7 @@ use App\Models\Pegawai;
 use App\Models\JenisPegawai;
 use Illuminate\Validation\Rule;
 use App\Exports\KelasTemplate;
+use App\Models\Dokter;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\DokterService;
 
@@ -24,101 +25,65 @@ class DokterController extends Controller
     }
     public function index(Request $request)
     {
-        // return ("halaman dokter");
+
         $search = $request->input('search');
-        $dokter = $this->dokterService->getAll($search);
+        $dokter = Dokter::when($search, function ($query, $search) {
+                return $query->where('nama_dokter', 'like', "%{$search}%")
+                             ->orWhere('spesialisasi', 'like', "%{$search}%");
+            })->get();
 
         return view('dokter.data-dokter', compact('dokter'));
     }
 
-    public function show($id)
-    {
-        $kelas = $this->kelasService->getById($id);
-
-        if ($kelas === false) {
-            return response()->json(['error' => 'Failed to retrieve data'], 500);
-        }
-
-        return response()->json($kelas);
-    }
 
     public function create()
     {
-        $jenisKelas = JenisKelas::all();
-        $jurusan = Jurusan::all();
-        $guru = Pegawai::where('id_jenispegawai', 2)->get();
-        // $cabangs = $this->cabangService->getCabangByBranchManager();
-        // if($cabangs == null){
-        //     $cabangs = $this->cabangService->getAllLoc();
-        // }
-        // return view('kelas.create', compact('cabangs'));
-        return view('pages.data.tambahDataKelas', compact('jenisKelas', 'jurusan', 'guru'));
+        return view('dokter.create');
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
+
         $request->validate([
-            'nama_kelas' => 'required|string|max:255|unique:tb_kelas,nama_kelas',
-            'jenis_kelas' => 'required',
-            'jurusan' => 'required',
-            'id_pegawai' => ['required', Rule::unique('tb_kelas', 'id_pegawai')],
-        ],[
-            'id_pegawai.unique' => 'Pegawai sudah menjadi wali kelas, silahkan pilih pegawai lain',
-            'nama_kelas.unique' => 'Kelas sudah ada',
-        ]);
+        'nama_dokter'    => 'required|string|max:255',
+        'spesialisasi'   => 'required|string|max:255',
+        'alamat_dokter'  => 'required|string',
+        'SIP'            => 'required|string|max:100|unique:tb_dokter,SIP',
+    ]);
 
-        $this->kelasService->create($request);
+    $this->dokterService->create($request);
 
-        return redirect()->route('kelas.create')->with('success', 'Kelas berhasil ditambahkan.');
+    return redirect()->route('dokter.index')->with('success', 'Data dokter berhasil ditambahkan.');
     }
+
     public function edit($id)
     {
-        $kelas = $this->kelasService->getKelasById($id);
-        // dd($kelas);
-        $jenisKelas = JenisKelas::all();
-        $jurusan = Jurusan::all();
-        $guru = Pegawai::where('id_jenispegawai', 2)->get();
-
-        // if ($kelas === false) {
-        //     return response()->json(['error' => 'Failed to retrieve data'], 500);
-        // }
-
-        return view('pages.data.editKelas', compact('kelas', 'jenisKelas', 'jurusan', 'guru'));
+        $dokter = Dokter::findOrFail($id);
+        return view('dokter.edit', compact('dokter'));
     }
+
     public function update(Request $request, $id)
     {
-        $kelas = $this->kelasService->getKelasById($id);
+        $dokter = Dokter::findOrFail($id);
+
         $request->validate([
-            'nama_kelas' => ['required','string','max:255', Rule::unique('tb_kelas', 'nama_kelas')->ignore($kelas->id_kelas, 'id_kelas'),],
-            'jenis_kelas' => 'required',
-            'jurusan' => 'required',
-            'id_pegawai' => ['required', Rule::unique('tb_kelas', 'id_pegawai')->ignore($kelas->id_kelas, 'id_kelas'),],
-        ],[
-            'id_pegawai.unique' => 'Pegawai sudah menjadi wali kelas, silahkan pilih pegawai lain',
-            'nama_kelas.unique' => 'Kelas sudah ada',
+            'nama_dokter' => 'required|string|max:255',
+            'spesialisasi' => 'required|string|max:255',
+            'alamat_dokter' => 'required|string',
+            'SIP' => 'required|string|max:100|unique:dokters,SIP,' . $id,
         ]);
 
-        $this->kelasService->update($request, $id);
+        $dokter->update($request->all());
 
-        return redirect()->route('kelas.edit', ['kela' => $id])->with('success', 'Kelas berhasil ditambahkan.');
-
+        return redirect()->route('dokter.index')->with('success', 'Data dokter berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        $result = $this->kelasService->delete($id);
+        $dokter = Dokter::findOrFail($id);
+        $dokter->delete();
 
-        if ($result === false) {
-            return response()->json(['error' => 'Failed to delete data'], 500);
-        }
-
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus!');
-    }
-
-    public function exportTemplate()
-    {
-        return Excel::download(new KelasTemplate, 'template-kelas.xlsx');
+        return redirect()->route('dokter.index')->with('success', 'Data dokter berhasil dihapus.');
     }
 
 }
