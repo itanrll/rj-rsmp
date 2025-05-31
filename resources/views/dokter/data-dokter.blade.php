@@ -33,7 +33,6 @@
             vertical-align: middle;
             border-bottom: 1px solid #e2e8f0;
         }
-
         th.sip,
         td.sip {
             text-align: right;

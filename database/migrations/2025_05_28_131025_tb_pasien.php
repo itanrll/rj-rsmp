@@ -13,34 +13,65 @@ return new class extends Migration
     {
         Schema::create('tb_pasien', function (Blueprint $table) {
             $table->id();
-            // 1. Nomor Rekam Medis: karakter
-            $table->string('nomor_rekam_medis')->unique();
-            // 2. NIK: numerik 16 digit
+            $table->string('nomor_rekam_medis', 50)->nullable();
             $table->char('nik', 16)->unique();
-            // 3. Nama Lengkap: karakter
-            $table->string('nama_lengkap');
-            // 4. Nama Ibu Kandung: karakter
-            $table->string('nama_ibu_kandung');
-            // 5. Tempat Lahir: karakter
-            $table->string('tempat_lahir');
-            // 6. Tanggal Lahir: date
-            $table->date('tanggal_lahir');
-            // 7. Jenis Kelamin: numerik (0-4)
-            $table->tinyInteger('jenis_kelamin');
-            // 8. Agama: numerik (1-8), 8 = lain-lain (free text)
-            $table->tinyInteger('agama');
-            $table->string('agama_lain')->nullable(); // untuk free text jika agama = 8
-            // 9. Alamat Lengkap: alphanumeric, karakter
-            $table->string('alamat_lengkap');
-            // 10. Pendidikan: numerik (0-8)
-            $table->tinyInteger('pendidikan');
-            // 11. Pekerjaan: numerik (0-5), 5 = lain-lain (free text)
-            $table->tinyInteger('pekerjaan');
-            $table->string('pekerjaan_lain')->nullable(); // untuk free text jika pekerjaan = 5
-            // 12. Status Pernikahan: numerik (1-4)
-            $table->tinyInteger('status_pernikahan');
-            // 13. Jaminan Kesehatan: karakter
-            $table->string('jaminan_kesehatan');
+            $table->string('nama_lengkap', 100);
+            $table->string('nama_ibu_kandung', 100)->nullable();
+            $table->string('tempat_lahir', 50)->nullable();
+            $table->date('tanggal_lahir')->nullable();
+
+            $table->enum('jenis_kelamin', [
+                'tidak_diketahui',
+                'laki-laki',
+                'perempuan',
+                'tidak_dapat_ditentukan',
+                'tidak_mengisi'
+            ])->nullable();
+
+            $table->enum('agama', [
+                'islam',
+                'kristen_protestan',
+                'katolik',
+                'hindu',
+                'budha',
+                'konghucu',
+                'penghayat',
+                'lain_lain'
+            ])->nullable();
+
+            $table->text('alamat')->nullable();
+
+            $table->enum('pendidikan', [
+                'tidak_sekolah',
+                'sd',
+                'sltp_sederajat',
+                'slta_sederajat',
+                'd1-d3_sederajat',
+                'd4',
+                's1',
+                's2',
+                's3'
+            ])->nullable();
+
+            $table->enum('pekerjaan', [
+                'tidak_bekerja',
+                'pns',
+                'tni/polri',
+                'bumn',
+                'pegawai_swasta/wirausaha',
+                'lain-lain'
+            ])->nullable();
+
+            $table->string('pekerjaan_lain', 100)->nullable(); // Hanya jika pilih "Lain-lain"
+
+            $table->enum('status_pernikahan', [
+                'belum_kawin',
+                'kawin',
+                'cerai_hidup',
+                'cerai_mati'
+            ])->nullable();
+
+            $table->string('jaminan_kesehatan', 100)->nullable();
             $table->timestamps();
         });
     }

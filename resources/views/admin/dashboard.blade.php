@@ -90,7 +90,7 @@
                 <h4 class="text-section">Data</h4>
               </li>
               <li class="nav-item">
-                <a href="{{ route('dokter.index') }}">
+                <a href="{{ route('pasien.index') }}">
                   <i class="fas fa-layer-group"></i>
                   <p>Data Pasien</p>
                   {{-- <span class="caret"></span> --}}

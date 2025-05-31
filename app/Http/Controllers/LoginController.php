@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\LoginService;
+use App\Models\Role;
 class LoginController extends Controller
 {
     protected $loginService;
@@ -14,7 +15,8 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('login');
+        $roles = Role::all();
+        return view('login', compact('roles'));
     }
 
     public function loginaction(Request $request)
