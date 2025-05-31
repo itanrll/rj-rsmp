@@ -17,8 +17,10 @@ Route::get('/dashboard', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::resource('login', LoginController::class);
 
 Route::resource('dokter', DokterController::class);
 
 Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
 Route::post('/dokter', [DokterController::class, 'store'])->name('dokter.store');
+Route::resource('pasien', PasienController::class);

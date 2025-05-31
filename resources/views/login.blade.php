@@ -94,7 +94,25 @@
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" placeholder="Masukkan Password" name="password">
+        <div class="input-group">
+          <input type="password" class="form-control" placeholder="Masukkan Password" name="password" id="password-field">
+          <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" id="toggle-password">
+          <i class="fas fa-eye"></i>
+        </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Login sebagai</label>
+        <select class="form-control" name="role" > 
+          <option value="" disabled selected>Login sebagai</option>
+        @foreach($roles as $item)
+              <option value="{{ $item->id }}" {{ old('role') == $item->id ? 'selected' : '' }}>
+                  {{ $item->nama }}
+              </option>
+          @endforeach
+        </select>
       </div>
       <button type="submit" class="btn btn-warning btn-block">Login</button>
     <div class="text-center mt-3">
@@ -117,6 +135,24 @@
 </div>
 
 <!-- AdminLTE JS via CDN -->
+<!-- jQuery (HARUS paling atas sebelum script lain) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <script>
+        $(document).ready(function() {
+          $('#toggle-password').on('click', function() {
+        var input = $('#password-field');
+        var icon = $(this).find('i');
+        if (input.attr('type') === 'password') {
+          input.attr('type', 'text');
+          icon.removeClass('fa-eye').addClass('fa-eye-slash');
+        } else {
+          input.attr('type', 'password');
+          icon.removeClass('fa-eye-slash').addClass('fa-eye');
+        }
+          });
+        });
+      </script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/plugins/jquery/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
