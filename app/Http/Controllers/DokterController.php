@@ -28,9 +28,9 @@ class DokterController extends Controller
 
         $search = $request->input('search');
         $dokter = Dokter::when($search, function ($query, $search) {
-                return $query->where('nama_dokter', 'like', "%{$search}%")
-                             ->orWhere('spesialisasi', 'like', "%{$search}%");
-            })->get();
+            return $query->where('nama_dokter', 'like', "%{$search}%")
+                ->orWhere('spesialisasi', 'like', "%{$search}%");
+        })->get();
 
         return view('dokter.data-dokter', compact('dokter'));
     }
@@ -45,15 +45,15 @@ class DokterController extends Controller
     {
 
         $request->validate([
-        'nama_dokter'    => 'required|string|max:255',
-        'spesialisasi'   => 'required|string|max:255',
-        'alamat_dokter'  => 'required|string',
-        'SIP'            => 'required|string|max:100|unique:tb_dokter,SIP',
-    ]);
+            'nama_dokter'    => 'required|string|max:255',
+            'spesialisasi'   => 'required|string|max:255',
+            'alamat_dokter'  => 'required|string',
+            'SIP'            => 'required|string|max:100|unique:tb_dokter,SIP',
+        ]);
 
-    $this->dokterService->create($request);
+        $this->dokterService->create($request);
 
-    return redirect()->route('dokter.index')->with('success', 'Data dokter berhasil ditambahkan.');
+        return redirect()->route('dokter.index')->with('success', 'Data dokter berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -67,10 +67,10 @@ class DokterController extends Controller
         $dokter = Dokter::findOrFail($id);
 
         $request->validate([
-            'nama_dokter' => 'required|string|max:255',
-            'spesialisasi' => 'required|string|max:255',
-            'alamat_dokter' => 'required|string',
-            'SIP' => 'required|string|max:100|unique:dokters,SIP,' . $id,
+            'nama_dokter'    => 'required|string|max:255',
+            'spesialisasi'   => 'required|string|max:255',
+            'alamat_dokter'  => 'required|string',
+            'SIP'            => 'required|string|max:100|unique:tb_dokter,SIP,' . $id,
         ]);
 
         $dokter->update($request->all());

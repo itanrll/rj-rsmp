@@ -19,6 +19,7 @@ Route::get('/login', function () {
 });
 
 Route::resource('dokter', DokterController::class);
+Route::delete('/dokter/{id}', [DokterController::class, 'destroy'])->name('dokter.destroy');
 
 Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
 Route::post('/dokter', [DokterController::class, 'store'])->name('dokter.store');
