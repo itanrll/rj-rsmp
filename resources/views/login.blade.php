@@ -113,7 +113,7 @@
       </div>
       <button type="submit" class="btn btn-warning btn-block">Login</button>
     <div class="text-center mt-3">
-        <a href="">Belum punya akun? Daftar di sini</a>
+        <a href="{{ route('register') }}">Belum punya akun? Daftar di sini</a>
     </div>
     </form>
     <div class="footer-links text-center mt-4">
