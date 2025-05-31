@@ -13,12 +13,12 @@ Route::get('/', function () {
 });
 
 // Login
-Route::get('/login', [LoginController::class, 'showLogin'])->name('login');        // halaman login
-Route::post('/actionlogin', [LoginController::class, 'loginaction'])->name('actionlogin'); // proses login
+Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
+Route::post('/actionlogin', [LoginController::class, 'loginaction'])->name('actionlogin'); 
 
 // Register
-Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');  // halaman register
-Route::post('/register', [RegisterController::class, 'registerAction'])->name('register.action'); // proses register
+Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');  
+Route::post('/register', [RegisterController::class, 'registerAction'])->name('register.action');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
