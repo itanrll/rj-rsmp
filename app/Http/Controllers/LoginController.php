@@ -43,7 +43,7 @@ class LoginController extends Controller
             }
         }else{
             // dd($result);
-            return redirect()->route('dashboard')->with('success', 'Login berhasil');
+            return $result;
         }
 
         // Jika login berhasil, redirect ke halaman dashboard
@@ -62,6 +62,6 @@ class LoginController extends Controller
         $request->session()->flush();
 
         // Redirect ke halaman login
-        return redirect()->route('login')->with('success', 'Logout berhasil');
+        return redirect()->route('login.index')->with('success', 'Logout berhasil');
     }
 }

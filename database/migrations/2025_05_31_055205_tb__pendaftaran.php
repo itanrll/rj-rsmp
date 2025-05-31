@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_admin', function (Blueprint $table) {
+        Schema::create('tb_pendaftaran', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->string('name');
+            $table->foreignId('pasien_id')->constrained('tb_pasien')->onDelete('cascade');
+            $table->foreignId('dokter_id')->constrained('tb_dokter')->onDelete('cascade');
+            $table->dateTime('waktu_kunjungan');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_admin');
+        //
     }
 };

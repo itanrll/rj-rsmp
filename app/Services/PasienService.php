@@ -95,6 +95,7 @@ class PasienService
                 'pekerjaan_lain'      => $request->pekerjaan_lain,
                 'status_pernikahan'   => $request->status_pernikahan,
                 'jaminan_kesehatan'   => $request->jaminan_kesehatan,
+                'no_hp'               => $request->no_hp,
             ]);
             return $pasien;
         } catch (Exception $e) {

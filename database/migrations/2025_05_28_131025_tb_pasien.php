@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tb_pasien', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nomor_rekam_medis', 50)->nullable();
             $table->char('nik', 16)->unique();
             $table->string('nama_lengkap', 100);
@@ -70,7 +71,7 @@ return new class extends Migration
                 'cerai_hidup',
                 'cerai_mati'
             ])->nullable();
-
+            $table->string('no_hp')->nullable();
             $table->string('jaminan_kesehatan', 100)->nullable();
             $table->timestamps();
         });

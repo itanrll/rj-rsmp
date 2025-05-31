@@ -44,6 +44,12 @@
     @csrf
 
     <div class="row g-3">
+
+      <div class="col-md-6">
+        <label for="nomor_rekam_medis" class="form-label">No Rekam Medis</label>
+        <input type="text" class="form-control" id="nomor_rekam_medis" name="nomor_rekam_medis" value="{{ old('nomor_rekam_medis') }}" required>
+      </div>
+
       <div class="col-md-6">
         <label for="nik" class="form-label">NIK</label>
         <input type="text" class="form-control" id="nik" name="nik" value="{{ old('nik') }}" required>
@@ -58,10 +64,15 @@
         <label for="nama_ibu_kandung" class="form-label">Nama Ibu Kandung</label>
         <input type="text" class="form-control" id="nama_ibu_kandung" name="nama_ibu_kandung" value="{{ old('nama_ibu_kandung') }}" required>
       </div>
-
+      
+      
       <div class="col-md-6">
         <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
         <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
+      </div>
+      <div class="col-md-6">
+        <label for="no_hp" class="form-label">No HP</label>
+        <input type="text" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required>
       </div>
 
       <div class="col-md-6">
