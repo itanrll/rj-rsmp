@@ -39,7 +39,7 @@
     <div class="container">
       <h1 class="display-4 font-weight-bold">Selamat Datang di Aplikasi RJ-RSMP</h1>
       <p class="lead">Pendaftaran Rawat Jalan Rumah Sakit Medika Pratama</p>
-      <a href="/login" class="btn btn-light btn-lg mt-3">Login</a>
+      <a href="{{ route('login.index') }}" class="btn btn-light btn-lg mt-3">Login</a>
     </div>
   </div>
 
