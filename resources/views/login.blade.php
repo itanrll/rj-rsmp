@@ -107,11 +107,8 @@
         <label>Login sebagai</label>
         <select class="form-control" name="role" > 
           <option value="" disabled selected>Login sebagai</option>
-        @foreach($roles as $item)
-              <option value="{{ $item->id }}" {{ old('role') == $item->id ? 'selected' : '' }}>
-                  {{ $item->nama }}
-              </option>
-          @endforeach
+        <option value="petugas" {{ old('role') == 'petugas' ? 'selected' : '' }}>Petugas</option>
+        <option value="pasien" {{ old('role') == 'pasien' ? 'selected' : '' }}>Pasien</option>
         </select>
       </div>
       <button type="submit" class="btn btn-warning btn-block">Login</button>

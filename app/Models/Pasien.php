@@ -12,6 +12,7 @@ class Pasien extends Model
     protected $table = 'tb_pasien';
 
     protected $fillable = [
+        'user_id',
         'nomor_rekam_medis',
         'nik',
         'nama_lengkap',
@@ -26,5 +27,15 @@ class Pasien extends Model
         'pekerjaan_lain',
         'status_pernikahan',
         'jaminan_kesehatan',
+        'no_hp',
     ];
+
+   public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function pendaftarans() {
+        return $this->hasMany(Pendaftaran::class);
+    }
+ 
 }

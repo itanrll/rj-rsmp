@@ -2,11 +2,10 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>RJ-RSMP</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      name="viewport"
-    />
+      name="viewport"/>
     <link
       rel="icon"
       href="{{ asset('image/assets/img/kaiadmin/favicon.ico') }}"
@@ -77,8 +76,7 @@
             <ul class="nav nav-secondary">
               <li class="nav-item">
                 <a
-                  data-bs-toggle="collapse"
-                  href="/dashboard"
+                  href="{{ route('admin.index') }}"
                   class="collapsed"
                   aria-expanded="false">
                   <i class="fas fa-home"></i>
@@ -139,13 +137,9 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-          >
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
-              <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
+              <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                 {{-- <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="submit" class="btn btn-search pe-1">
@@ -161,55 +155,43 @@
               </nav>
 
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                
-                
-                
-                
-
-                <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a
-                    class="dropdown-toggle profile-pic"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
-                    <div class="avatar-sm">
-                      <img
-                        src="https://ui-avatars.com/api/?name=Hizrian&background=random"
-                        alt="..."
-                        class="avatar-img rounded-circle"
-                      />
-                    </div>
-                    <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Admin</span>
-                    </span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user animated fadeIn">
-                    <div class="dropdown-user-scroll scrollbar-outer">
-                      <li>
-                        <div class="user-box">
-                          <div class="avatar-lg">
-                            <img
-                            src="https://ui-avatars.com/api/?name=Hizrian&background=random"
-                              alt="image profile"
-                              class="avatar-img rounded"
-                            />
-                          </div>
-                          <div class="u-text">
-                            <h4>Admin</h4>
-                            
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        
-                        <a class="dropdown-item" href="#">Logout</a>
-                      </li>
-                    </div>
-                  </ul>
-                </li>
-              </ul>
+                            <li class="nav-item topbar-user dropdown hidden-caret">
+                                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
+                                    aria-expanded="false">
+                                    <div class="avatar-sm">
+                                        <img src="https://ui-avatars.com/api/?name=Hizrian&background=random" alt="..."
+                                            class="avatar-img rounded-circle" />
+                                    </div>
+                                    <span class="profile-username">
+                                      <span class="op-7">Hi,</span>
+                                      <span class="fw-bold">Admin</span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                    <div class="dropdown-user-scroll scrollbar-outer">
+                                        <li>
+                                            <div class="user-box">
+                                                <div class="avatar-lg">
+                                                    <img src="https://ui-avatars.com/api/?name=Hizrian&background=random"
+                                                        alt="image profile" class="avatar-img rounded" />
+                                                </div>
+                                                <div class="u-text">
+                                                  <h4>Admin</h4>
+                                                  
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                          <form action="{{ route('logout') }}" method="POST" class="mt-4">
+                                          @csrf
+                                          <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                          {{-- <a class="dropdown-item" href="#">Logout</a> --}}
+                                        </li>
+                                    </div>
+                                </ul>
+                            </li>
+                        </ul>
             </div>
           </nav>
           <!-- End Navbar -->
@@ -299,13 +281,20 @@
                                                             class="btn btn-icon btn-primary">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <form action="{{ route('pasien.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                        <button type="button"
+                                                                class="btn btn-icon btn-danger delete-btn"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalHapus"
+                                                                data-id="{{ $item->id }}">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        {{-- <form action="{{ route('pasien.destroy', $item->id) }}" method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-icon btn-danger delete-btn" type="submit">
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
-                                                        </form>
+                                                        </form> --}}
                                                         {{-- <button type="button" class="btn btn-icon btn-danger"
                                                             data-confirm="Yakin?|Data akan dihapus"
                                                             data-confirm-yes="document.getElementById('delete-form-{{ $item->id_kelas }}').submit();">
@@ -334,6 +323,33 @@
             </div>
           </div>
         </div>
+
+        <!-- Modal Konfirmasi Hapus -->
+      <div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="formHapus" method="POST">
+              @csrf
+              @method('DELETE')
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalHapusLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+              </div>
+
+              <div class="modal-body">
+                Apakah kamu yakin ingin menghapus data ini?
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
@@ -623,5 +639,22 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const modalHapus = document.getElementById('modalHapus');
+
+        modalHapus.addEventListener('show.bs.modal', function (event) {
+          const button = event.relatedTarget;
+          const id = button.getAttribute('data-id');
+          const form = document.getElementById('formHapus');
+
+          // Ubah action form untuk submit ke /pasien/{id}
+          form.action = `/pasien/${id}`;
+        });
+      });
+    </script>
+
+
+
   </body>
 </html>
