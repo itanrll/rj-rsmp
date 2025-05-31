@@ -62,6 +62,6 @@ class LoginController extends Controller
         $request->session()->flush();
 
         // Redirect ke halaman login
-        return redirect()->route('ShowLogin')->with('success', 'Logout berhasil');
+        return redirect()->route('register')->with('success', 'Logout berhasil');
     }
 }
