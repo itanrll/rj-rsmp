@@ -15,8 +15,8 @@ class LoginController extends Controller
 
     public function index()
     {
-        $roles = Role::all();
-        return view('login', compact('roles'));
+        // $roles = Role::all();
+        return view('login');
     }
 
     public function loginaction(Request $request)
