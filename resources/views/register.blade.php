@@ -94,7 +94,7 @@
       </div>
       <button type="submit" class="btn btn-warning btn-block">Register</button>
       <div class="text-center mt-3">
-        <a href="{{ route('actionlogin') }}">Sudah punya akun? Login di sini</a>
+        <a href="{{ route('login.index') }}">Sudah punya akun? Login di sini</a>
       </div>
     </form>
   </div>
