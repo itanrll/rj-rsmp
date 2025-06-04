@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>RJ-RSMP</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="{{ asset('image/assets/img/kaiadmin/favicon.ico') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    {{-- <link rel="icon" href="{{ asset('image/assets/img/kaiadmin/favicon.ico') }}" type="image/x-icon" /> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"> --}}
 
 
     <!-- Fonts and icons -->
@@ -49,10 +49,11 @@
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="index.html" class="logo">
+                    {{-- <a href="index.html" class="logo">
                         <img src="{{ asset('image/assets/img/kaiadmin/logo_light.svg') }}" alt="navbar brand"
                             class="navbar-brand" height="20" />
-                    </a>
+                    </a> --}}
+                    <span class="fw-bold text-white ms-2">RJ- RSMP</span>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
                             <i class="gg-menu-right"></i>

@@ -6,11 +6,7 @@
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"/>
-    <link
-      rel="icon"
-      href="{{ asset('image/assets/img/kaiadmin/favicon.ico') }}"
-      type="image/x-icon"
-    />
+      
 
     <!-- Fonts and icons -->
     <script src="{{ asset('image/assets/js/plugin/webfont/webfont.min.js') }}"></script>
@@ -49,14 +45,15 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
+            {{-- <a href="index.html" class="logo">
               <img
                 src="{{ asset('image/assets/img/kaiadmin/logo_light.svg') }}"
                 alt="navbar brand"
                 class="navbar-brand"
                 height="20"
               />
-            </a>
+            </a> --}}
+            <span class="fw-bold text-white ms-2">RJ- RSMP</span>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
